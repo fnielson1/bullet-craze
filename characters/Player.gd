@@ -1,25 +1,45 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-const ACCELERATE_SPEED = SPEED / 20
-const DECELERATE_SPEED = SPEED / 30
+@export var BULLET_VELOCITY_SCALE = 600
+@export var SPEED = 300.0
+@export var JUMP_VELOCITY = -400.0
+var ACCELERATE_SPEED = SPEED / 20
+var DECELERATE_SPEED = SPEED / 30
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var BulletScene = preload("res://weapons/bullet.tscn")
+
 @onready var anim = $AnimationPlayer
-@onready var playerSpriteWidth: float
-@onready var playerSpriteHeight: float
+@onready var bulletSpawn = $PlayerSprite/BulletSpawn
 
 
 func _ready() -> void:
-	playerSpriteWidth = 13
-	playerSpriteHeight = 23
+	SignalManager.global_gui_input.connect(_handle_input)
 
 
 func _physics_process(delta: float) -> void:
+	_handle_movement(delta)
 	
+
+func _handle_input(event: InputEvent) -> void:
+	var buttonPress = Input.is_action_just_released('ui_primary_action')
+	if buttonPress:
+		_shoot()
+	
+	
+func _shoot() -> void:
+	var current_scene = get_tree().current_scene
+	var bullet = BulletScene.instantiate()
+	var radians = get_angle_to(get_global_mouse_position())
+
+	current_scene.add_child(bullet)
+	bullet.transform = bulletSpawn.global_transform
+	bullet.velocity = Vector2(cos(radians) * BULLET_VELOCITY_SCALE, sin(radians) * BULLET_VELOCITY_SCALE); # scale for speed
+
+
+func _handle_movement(delta: float) -> void:
 	# Handle Jump.
 	if Input.is_action_pressed("ui_up"):
 		velocity.y = move_toward(velocity.y, -SPEED, ACCELERATE_SPEED)
@@ -43,19 +63,14 @@ func _physics_process(delta: float) -> void:
 			anim.play("Idle")
 			
 	_set_look_direction()
-	_keep_character_on_screen()
-
 	move_and_slide()
-	
+
+
 func _set_look_direction() -> void:
 	# Make the sprite look left or right depending on where the mouse is
 	var angle = get_angle_to(get_global_mouse_position())
-	if angle < -1.5 or angle > 1.5:
-		$PlayerSprite.flip_h = true
+	angle = snappedf(angle, 0.01)
+	if angle <= -1.55 or angle >= 1.65:
+		self.scale.x = -1
 	else:
-		$PlayerSprite.flip_h = false
-		
-func _keep_character_on_screen() -> void:
-	var screensize = get_viewport().size
-	position.x = clamp(position.x, 0 + playerSpriteWidth, screensize.x - playerSpriteWidth)
-	position.y = clamp(position.y, 0 + playerSpriteHeight, screensize.y - playerSpriteHeight)
+		self.scale.x = 1

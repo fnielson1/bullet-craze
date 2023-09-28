@@ -82,6 +82,8 @@ _data = {
 collision_layer = 2
 collision_mask = 3
 gravity_scale = 0.0
+max_contacts_reported = 200
+contact_monitor = true
 script = ExtResource("1_076v5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -97,3 +99,10 @@ autoplay = "Flying"
 libraries = {
 "": SubResource("AnimationLibrary_mj3xy")
 }
+
+[node name="TimeToLive" type="Timer" parent="."]
+process_callback = 0
+wait_time = 10.0
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
