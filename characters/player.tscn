@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cp2fl8rkhbpo7" path="res://assets/MagicCliffsGodot/Player/spritesheets/run.png" id="4_vgptr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g25ms"]
-radius = 5.0
+radius = 7.0
 height = 44.0
 
 [sub_resource type="Animation" id="Animation_dbjlu"]
@@ -244,4 +244,5 @@ libraries = {
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -26)
 sprite_frames = SubResource("SpriteFrames_jsaj0")
-animation = &"Run"
+animation = &"Idle"
+frame = 1

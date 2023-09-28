@@ -5,3 +5,7 @@ func _physics_process(delta: float) -> void:
 	
 
 	move_and_slide()
+
+
+func _on_player_detection_body_entered(body):
+	print(body.name)

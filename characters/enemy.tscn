@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://gsmsmm25jepl"]
+[gd_scene load_steps=26 format=3 uid="uid://gsmsmm25jepl"]
 
 [ext_resource type="Texture2D" uid="uid://c0a8xk5dxlapy" path="res://assets/MagicCliffsGodot/Enemies/ShurikenDude/shuriken-dude.png" id="1_7u413"]
 [ext_resource type="Script" path="res://characters/enemy.gd" id="1_lmefe"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ctj3wn3usl1v6" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-6.png" id="8_5l2v1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_na1a6"]
-radius = 8.0
+radius = 9.0
 height = 52.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p3dd1"]
@@ -126,6 +126,58 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_2ka71"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_7t2r8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o8tj3"]
+_data = {
+"Idle": SubResource("Animation_2ka71"),
+"RESET": SubResource("Animation_7t2r8")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y2ech"]
+radius = 119.004
+
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_lmefe")
 
@@ -135,7 +187,18 @@ shape = SubResource("CapsuleShape2D_na1a6")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -5)
 sprite_frames = SubResource("SpriteFrames_q7bch")
-animation = &"Death"
-autoplay = "Idle"
+animation = &"Idle"
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+libraries = {
+"": SubResource("AnimationLibrary_o8tj3")
+}
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+shape = SubResource("CircleShape2D_y2ech")
+
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]

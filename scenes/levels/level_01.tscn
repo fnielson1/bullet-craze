@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b20hkokeaw01q"]
+[gd_scene load_steps=8 format=3 uid="uid://b20hkokeaw01q"]
 
 [ext_resource type="Texture2D" uid="uid://c7jyq2oh4qpht" path="res://assets/sunny-land/environment/tileset.png" id="1_q7tjy"]
 [ext_resource type="PackedScene" uid="uid://c5ee14kxpiv8o" path="res://scenes/level_background.tscn" id="1_w3nk1"]
 [ext_resource type="PackedScene" uid="uid://bntgruoduggob" path="res://characters/player.tscn" id="3_djv6c"]
 [ext_resource type="PackedScene" uid="uid://gsmsmm25jepl" path="res://characters/enemy.tscn" id="4_1ucq8"]
+[ext_resource type="PackedScene" uid="uid://ckejo5papwmeb" path="res://weapons/bullet.tscn" id="5_t8wvp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t1neo"]
 texture = ExtResource("1_q7tjy")
@@ -421,3 +422,6 @@ position = Vector2(56, 570)
 
 [node name="Enemy" parent="." instance=ExtResource("4_1ucq8")]
 position = Vector2(776, 405)
+
+[node name="Bullet" parent="." instance=ExtResource("5_t8wvp")]
+position = Vector2(109, 536)
