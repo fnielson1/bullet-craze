@@ -7,5 +7,6 @@ static var _endLevelOverlayScene = preload('res://overlays/end_level_overlay.tsc
 
 func show_end_level_overlay(success: bool) -> void:
 	var overlay = _endLevelOverlayScene.instantiate()
-	overlay.set_title('Winner!')
+	if success:
+		overlay.set_title('Winner!')
 	get_tree().current_scene.add_child(overlay)

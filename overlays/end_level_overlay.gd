@@ -1,11 +1,9 @@
 extends CanvasLayer
 
 
-@onready var _titleNode = $Message
-
 
 func set_title(title: String) -> void:
-	_titleNode.text = title
+	$Message.text = title
 	
 
 func _on_level_select_button_up() -> void:
