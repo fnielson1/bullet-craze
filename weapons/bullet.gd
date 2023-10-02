@@ -1,21 +1,36 @@
-extends RigidBody2D
+class_name BulletScript extends RigidBody2D
 
+
+static var BulletScene = preload("res://weapons/bullet.tscn")
 var velocity = Vector2(0,0)
+
+@onready var _timer = $TimeToLive
+@onready var _damageNode = $Damage
+
+
+static func shoot(current_scene: Node, spawn_transform: Transform2D, velocity_arg: Vector2) -> void:
+	var bullet = BulletScene.instantiate()
+	current_scene.add_child(bullet)
+	bullet.transform = spawn_transform
+	bullet.velocity = velocity_arg
 
 
 func _ready() -> void:
-	$TimeToLive.timeout.connect(_on_time_to_live_done)
-	$TimeToLive.start()
+	_timer.timeout.connect(_on_time_to_live_done)
+	_timer.start()
 	
 func _on_time_to_live_done() -> void:
-	$TimeToLive.stop()
+	_timer.stop()
 	queue_free()
 
 func _physics_process(delta):
 	var collision_info = move_and_collide(velocity * delta)
 	if collision_info:
+		_process_collision_info(collision_info)
+		
+
+func _process_collision_info(collision_info: KinematicCollision2D) -> void:
+	if _damageNode.on_hit(collision_info):
+		self.queue_free()
+	else:
 		velocity = velocity.bounce(collision_info.get_normal())
-
-
-func _on_body_entered(body) -> void:
-	print('collision with ' + body.name) # Replace with function body.

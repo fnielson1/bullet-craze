@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckejo5papwmeb"]
+[gd_scene load_steps=11 format=3 uid="uid://ckejo5papwmeb"]
 
 [ext_resource type="Script" path="res://weapons/bullet.gd" id="1_076v5"]
 [ext_resource type="Texture2D" uid="uid://dpv17q60anljg" path="res://assets/MagicCliffsGodot/Enemies/ShurikenDude/Shuriken/shuriken.png" id="1_881hr"]
+[ext_resource type="PackedScene" uid="uid://cfsegkm8kxgpi" path="res://physical/damage.tscn" id="3_orqlh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nx51x"]
 radius = 6.0
@@ -80,7 +81,7 @@ _data = {
 
 [node name="Bullet" type="RigidBody2D"]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 129
 gravity_scale = 0.0
 max_contacts_reported = 200
 contact_monitor = true
@@ -105,4 +106,5 @@ process_callback = 0
 wait_time = 10.0
 one_shot = true
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="Damage" parent="." instance=ExtResource("3_orqlh")]
+damage = 50

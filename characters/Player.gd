@@ -11,8 +11,9 @@ var DECELERATE_SPEED = SPEED / 30
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var BulletScene = preload("res://weapons/bullet.tscn")
 
-@onready var anim = $AnimationPlayer
-@onready var bulletSpawn = $PlayerSprite/BulletSpawn
+@onready var _anim = $AnimationPlayer
+@onready var _bulletSpawn = $PlayerSprite/BulletSpawn
+@onready var _healthNode = $Health
 
 
 func _ready() -> void:
@@ -31,36 +32,34 @@ func _handle_input(event: InputEvent) -> void:
 	
 func _shoot() -> void:
 	var current_scene = get_tree().current_scene
-	var bullet = BulletScene.instantiate()
 	var radians = get_angle_to(get_global_mouse_position())
 
-	current_scene.add_child(bullet)
-	bullet.transform = bulletSpawn.global_transform
-	bullet.velocity = Vector2(cos(radians) * BULLET_VELOCITY_SCALE, sin(radians) * BULLET_VELOCITY_SCALE); # scale for speed
+	var velocity_local = Vector2(cos(radians) * BULLET_VELOCITY_SCALE, sin(radians) * BULLET_VELOCITY_SCALE); # scale for speed
+	BulletScript.shoot(current_scene, _bulletSpawn.global_transform, velocity_local)
 
 
 func _handle_movement(delta: float) -> void:
 	# Handle Jump.
 	if Input.is_action_pressed("ui_up"):
 		velocity.y = move_toward(velocity.y, -SPEED, ACCELERATE_SPEED)
-		anim.play("Up")
+		_anim.play("Up")
 	elif Input.is_action_pressed("ui_down"):
 		velocity.y = move_toward(velocity.y, SPEED, ACCELERATE_SPEED)
-		anim.play("Down")
+		_anim.play("Down")
 	else:
 		velocity.y = move_toward(velocity.y, 0, DECELERATE_SPEED)
-		anim.play("Idle")
+		_anim.play("Idle")
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * SPEED, ACCELERATE_SPEED)
-		anim.play("Run")
+		_anim.play("Run")
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATE_SPEED)
 		if velocity.y == 0:
-			anim.play("Idle")
+			_anim.play("Idle")
 			
 	_set_look_direction()
 	move_and_slide()

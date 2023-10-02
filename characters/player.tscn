@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://bntgruoduggob"]
+[gd_scene load_steps=23 format=3 uid="uid://bntgruoduggob"]
 
 [ext_resource type="Script" path="res://characters/player.gd" id="1_1pcwq"]
 [ext_resource type="Texture2D" uid="uid://by2tnnopj34gp" path="res://assets/MagicCliffsGodot/Player/spritesheets/fall.png" id="2_i62qq"]
 [ext_resource type="Texture2D" uid="uid://bs0q3yw83mb6p" path="res://assets/MagicCliffsGodot/Player/spritesheets/idle.png" id="3_kdghg"]
 [ext_resource type="Texture2D" uid="uid://0mebyg6cvb56" path="res://assets/MagicCliffsGodot/Player/spritesheets/attack.png" id="4_ehsbt"]
 [ext_resource type="Texture2D" uid="uid://cp2fl8rkhbpo7" path="res://assets/MagicCliffsGodot/Player/spritesheets/run.png" id="4_vgptr"]
+[ext_resource type="PackedScene" uid="uid://c5oy86x3tg4mc" path="res://physical/health.tscn" id="6_6ycgk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g25ms"]
 radius = 7.0
@@ -230,6 +231,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 129
 script = ExtResource("1_1pcwq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -249,3 +251,5 @@ frame = 1
 
 [node name="BulletSpawn" type="Marker2D" parent="PlayerSprite"]
 position = Vector2(14, 23)
+
+[node name="Health" parent="." instance=ExtResource("6_6ycgk")]
