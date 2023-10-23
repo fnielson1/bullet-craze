@@ -1,7 +1,6 @@
 extends CanvasLayer
 
 
-
 func set_title(title: String) -> void:
 	$Message.text = title
 	

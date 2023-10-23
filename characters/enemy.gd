@@ -4,13 +4,21 @@ extends CharacterBody2D
 @onready var _anim = $AnimationPlayer
 @onready var _healthNode = $Health
 @onready var _collisionShape = $CollisionShape2D
+@onready var _enemyAi = $EnemyAi
+
+
+func _ready() -> void: 
+	_enemyAi.setup(get_instance_id())
 
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 
-func on_hit(dmg: int) -> bool:
+func on_hit(shooter_id: int, dmg: int) -> bool:
+	if shooter_id == get_instance_id():
+		return false;
+		
 	if _healthNode.on_hit(dmg):
 		_anim.play("Death")
 		_collisionShape.disabled = true # Don't have anything collide with us anymore
@@ -21,8 +29,8 @@ func on_hit(dmg: int) -> bool:
 		return false
 
 
-func _on_player_detection_body_entered(body):
-	print(body.name)
+func _on_body_entered(body: Node2D) -> void:
+	print("Body detected: " + body.name)
 
 
 func _on_animation_player_animation_finished(anim_name: String) -> void:

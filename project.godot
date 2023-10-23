@@ -19,6 +19,7 @@ config/icon="res://assets/icon.svg"
 
 GameManager="*res://scripts/game_manager.gd"
 SignalManager="*res://scripts/signal_manager.tscn"
+Globals="*res://scripts/globals.gd"
 
 [display]
 

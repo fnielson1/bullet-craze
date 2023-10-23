@@ -1,19 +1,53 @@
-[gd_scene load_steps=23 format=3 uid="uid://bntgruoduggob"]
+[gd_scene load_steps=33 format=3 uid="uid://bntgruoduggob"]
 
 [ext_resource type="Script" path="res://characters/player.gd" id="1_1pcwq"]
 [ext_resource type="Texture2D" uid="uid://by2tnnopj34gp" path="res://assets/MagicCliffsGodot/Player/spritesheets/fall.png" id="2_i62qq"]
+[ext_resource type="Texture2D" uid="uid://bwmmodf0dqdwv" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-1.png" id="2_yfqoi"]
+[ext_resource type="Texture2D" uid="uid://6g4irxj8fpdm" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-2.png" id="3_4bkxm"]
 [ext_resource type="Texture2D" uid="uid://bs0q3yw83mb6p" path="res://assets/MagicCliffsGodot/Player/spritesheets/idle.png" id="3_kdghg"]
+[ext_resource type="Texture2D" uid="uid://uxs5vrmwc7o1" path="res://assets/MagicCliffsGodot/Player/spritesheets/hurt.png" id="4_4fm7i"]
+[ext_resource type="Texture2D" uid="uid://68n6dl8ijta8" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-3.png" id="4_8ht2c"]
 [ext_resource type="Texture2D" uid="uid://0mebyg6cvb56" path="res://assets/MagicCliffsGodot/Player/spritesheets/attack.png" id="4_ehsbt"]
 [ext_resource type="Texture2D" uid="uid://cp2fl8rkhbpo7" path="res://assets/MagicCliffsGodot/Player/spritesheets/run.png" id="4_vgptr"]
+[ext_resource type="Texture2D" uid="uid://0hlv66aqtobk" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-4.png" id="5_8iw0i"]
 [ext_resource type="PackedScene" uid="uid://c5oy86x3tg4mc" path="res://physical/health.tscn" id="6_6ycgk"]
+[ext_resource type="Texture2D" uid="uid://dqd668bbuheof" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-5.png" id="6_hhrss"]
+[ext_resource type="Texture2D" uid="uid://ctj3wn3usl1v6" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-6.png" id="7_gv3a0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g25ms"]
 radius = 7.0
 height = 44.0
 
+[sub_resource type="Animation" id="Animation_s7yka"]
+resource_name = "Death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="Animation" id="Animation_vm420"]
 resource_name = "Down"
-length = 0.2
+length = 0.5
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -67,6 +101,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_fq28y"]
+resource_name = "OnHit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"OnHit"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_vdss8"]
@@ -144,8 +206,10 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f3ujn"]
 _data = {
+"Death": SubResource("Animation_s7yka"),
 "Down": SubResource("Animation_vm420"),
 "Idle": SubResource("Animation_dbjlu"),
+"OnHit": SubResource("Animation_fq28y"),
 "RESET": SubResource("Animation_vdss8"),
 "Run": SubResource("Animation_ca46y"),
 "Up": SubResource("Animation_3yoaw")
@@ -175,6 +239,10 @@ region = Rect2(256, 0, 128, 96)
 atlas = ExtResource("3_kdghg")
 region = Rect2(384, 0, 128, 96)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6l8ab"]
+atlas = ExtResource("4_4fm7i")
+region = Rect2(0, 0, 128, 96)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_wkvck"]
 atlas = ExtResource("4_vgptr")
 region = Rect2(768, 0, 128, 96)
@@ -185,6 +253,29 @@ region = Rect2(128, 0, 128, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jsaj0"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yfqoi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_4bkxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8ht2c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8iw0i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hhrss")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_gv3a0")
+}],
+"loop": true,
+"name": &"Death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h1y38")
@@ -215,6 +306,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_6l8ab")
+}],
+"loop": true,
+"name": &"OnHit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_wkvck")
 }],
 "loop": true,
@@ -230,7 +329,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 129
 script = ExtResource("1_1pcwq")
 
@@ -246,7 +345,7 @@ libraries = {
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -26)
 sprite_frames = SubResource("SpriteFrames_jsaj0")
-animation = &"Idle"
+animation = &"Death"
 frame = 1
 
 [node name="BulletSpawn" type="Marker2D" parent="PlayerSprite"]

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmaxvh86wpdgp"]
+
+[ext_resource type="Script" path="res://scripts/enemy_ai.gd" id="1_dfjll"]
+
+[node name="EnemyAi" type="Node2D"]
+script = ExtResource("1_dfjll")
+
+[node name="DetectPlayer" type="RayCast2D" parent="."]
+collision_mask = 129
+
+[node name="AttackTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
