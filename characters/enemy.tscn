@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://gsmsmm25jepl"]
+[gd_scene load_steps=30 format=3 uid="uid://gsmsmm25jepl"]
 
 [ext_resource type="Texture2D" uid="uid://c0a8xk5dxlapy" path="res://assets/MagicCliffsGodot/Enemies/ShurikenDude/shuriken-dude.png" id="1_7u413"]
 [ext_resource type="Script" path="res://characters/enemy.gd" id="1_lmefe"]
@@ -247,9 +247,6 @@ _data = {
 "RESET": SubResource("Animation_7t2r8")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_y2ech"]
-radius = 119.004
-
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 129
@@ -265,19 +262,14 @@ animation = &"Death"
 frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
 autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_o8tj3")
 }
-
-[node name="PlayerDetection" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
-shape = SubResource("CircleShape2D_y2ech")
 
 [node name="Health" parent="." instance=ExtResource("9_v74q6")]
 
 [node name="EnemyAi" parent="." instance=ExtResource("10_tos1s")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="body_entered" from="PlayerDetection" to="." method="_on_body_entered"]

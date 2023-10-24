@@ -1,9 +1,12 @@
 extends Node2D
 
 @export var BULLET_VELOCITY_SCALE = 600
+@export var NORMAL_ATTACK_SPEED = 0.5
+@export var FAST_ATTACK_SPEED = 0.1
 var _player: CharacterBody2D
 var _attackTarget: Object
 var _instanceIdToIgnore: int
+
 
 @onready var _attackTimer = $AttackTimer
 @onready var _detectPlayerRayCast = $DetectPlayer
@@ -51,3 +54,20 @@ func _shoot() -> void:
 		var bullet = BulletScript.shoot(_instanceIdToIgnore, current_scene, self.global_transform, velocity_local)
 		bullet.set_time_to_live(5)
 		bullet.set_collision_mask_value(Globals.PLAYER_LAYER, true)
+
+
+func _on_player_detection_body_entered(body: Node2D) -> void:
+	if body.is_in_group(Globals.PLAYER_GROUP):
+		_set_fast_attack(true)
+
+
+func _on_player_detection_body_exited(body: Node2D) -> void:
+	if body.is_in_group(Globals.PLAYER_GROUP):
+		_set_fast_attack(false)
+		
+
+func _set_fast_attack(value: bool) -> void:
+	if value:
+		_attackTimer.wait_time = FAST_ATTACK_SPEED
+	else:
+		_attackTimer.wait_time = NORMAL_ATTACK_SPEED

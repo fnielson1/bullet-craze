@@ -46,7 +46,6 @@ func on_hit(shooter_id: int, dmg: int) -> bool:
 		
 	if _healthNode.on_hit(dmg):
 		_anim.play("Death")
-		_collisionShape.disabled = true # Don't have anything collide with us anymore
 		GameManager.show_end_level_overlay(false)
 		return true
 	else:

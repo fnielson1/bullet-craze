@@ -337,6 +337,7 @@ script = ExtResource("1_1pcwq")
 shape = SubResource("CapsuleShape2D_g25ms")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
 autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_f3ujn")

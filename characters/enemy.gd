@@ -29,10 +29,6 @@ func on_hit(shooter_id: int, dmg: int) -> bool:
 		return false
 
 
-func _on_body_entered(body: Node2D) -> void:
-	print("Body detected: " + body.name)
-
-
 func _on_animation_player_animation_finished(anim_name: String) -> void:
 	if anim_name == 'Death':
 		self.queue_free()
