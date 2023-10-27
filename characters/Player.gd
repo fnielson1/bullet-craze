@@ -56,12 +56,10 @@ func on_hit(shooter_id: int, dmg: int) -> bool:
 func _handle_movement(delta: float) -> void:
 	if Input.is_action_pressed("ui_up"):
 		velocity.y = move_toward(velocity.y, -SPEED, ACCELERATE_SPEED)
-		if not _anim.is_playing():
-			_anim.play("Up")
+		_anim.play("Up")
 	elif Input.is_action_pressed("ui_down"):
 		velocity.y = move_toward(velocity.y, SPEED, ACCELERATE_SPEED)
-		if not _anim.is_playing():
-			_anim.play("Down")
+		_anim.play("Down")
 	else:
 		velocity.y = move_toward(velocity.y, 0, DECELERATE_SPEED)
 		if not _anim.is_playing():
@@ -72,11 +70,10 @@ func _handle_movement(delta: float) -> void:
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * SPEED, ACCELERATE_SPEED)
-		if not _anim.is_playing():
-			_anim.play("Run")
+		_anim.play("Run")
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATE_SPEED)
-		if velocity.y == 0 and not _anim.is_playing():
+		if velocity.y == 0:
 			_anim.play("Idle")
 			
 	_set_look_direction()
@@ -91,3 +88,10 @@ func _set_look_direction() -> void:
 		self.scale.x = -1
 	else:
 		self.scale.x = 1
+		
+
+func _play_death_sfx() -> void:
+	SoundManager.play_death_sfx()
+	
+func _play_fly_sfx() -> void:
+	SoundManager.play_fly_sfx()

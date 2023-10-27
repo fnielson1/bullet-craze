@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://guod0s4x4pxn"]
+
+[ext_resource type="Script" path="res://scripts/sound_manager.gd" id="1_cwhog"]
+[ext_resource type="AudioStream" uid="uid://cfxmb14d1nnwn" path="res://assets/sounds/boom.wav" id="1_ngpin"]
+[ext_resource type="AudioStream" uid="uid://cn1nrl7v2543m" path="res://assets/sounds/fly.wav" id="3_vxjtb"]
+[ext_resource type="AudioStream" uid="uid://c4m8wjiiq6vv" path="res://assets/sunny-land/sound/platformer_level03_loop.ogg" id="4_s0i06"]
+
+[node name="SoundManager" type="Node2D"]
+script = ExtResource("1_cwhog")
+
+[node name="DeathSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_ngpin")
+
+[node name="FlySfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vxjtb")
+volume_db = -10.0
+
+[node name="LevelMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("4_s0i06")
+volume_db = -10.0
+autoplay = true

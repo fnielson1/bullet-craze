@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dqd668bbuheof" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-5.png" id="7_h1ux0"]
 [ext_resource type="Texture2D" uid="uid://ctj3wn3usl1v6" path="res://assets/sunny-land/atlas/atlas_to_sprites/enemy-death-enemy-death-6.png" id="8_5l2v1"]
 [ext_resource type="PackedScene" uid="uid://c5oy86x3tg4mc" path="res://physical/health.tscn" id="9_v74q6"]
-[ext_resource type="PackedScene" uid="uid://cmaxvh86wpdgp" path="res://scripts/enemy_ai.tscn" id="10_tos1s"]
+[ext_resource type="PackedScene" uid="uid://cmaxvh86wpdgp" path="res://characters/enemy_ai.tscn" id="10_tos1s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_na1a6"]
 radius = 9.0

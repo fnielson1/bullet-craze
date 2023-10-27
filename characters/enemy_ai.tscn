@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://cmaxvh86wpdgp"]
 
-[ext_resource type="Script" path="res://scripts/enemy_ai.gd" id="1_dfjll"]
+[ext_resource type="Script" path="res://characters/enemy_ai.gd" id="1_gvmbr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qfgmd"]
 radius = 240.0
 
 [node name="EnemyAi" type="Node2D"]
-script = ExtResource("1_dfjll")
+script = ExtResource("1_gvmbr")
 
 [node name="DetectPlayer" type="RayCast2D" parent="."]
 collision_mask = 129
